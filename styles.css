@@ -59,9 +59,11 @@ img {
   transform:
     translate3d(calc(var(--mx) * -16px), calc(var(--my) * 5px), 0)
     scaleX(calc(0.96 + (var(--press) * 0.04)));
+  transform-origin: center;
   transition:
     transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 220ms ease;
+  animation: line-open 1050ms 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-copy {
@@ -73,7 +75,6 @@ img {
     translate3d(calc(var(--mx) * -10px), calc(var(--my) * -8px), 0)
     scale(calc(1 - ((1 - var(--press)) * 0.012)));
   transition: transform 560ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: settle-in 900ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 h1 {
@@ -83,6 +84,7 @@ h1 {
   line-height: 0.9;
   letter-spacing: 0;
   text-wrap: balance;
+  animation: title-open 1160ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-text {
@@ -92,6 +94,7 @@ h1 {
   font-weight: 500;
   line-height: 1.17;
   letter-spacing: 0;
+  animation: copy-open 820ms 410ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .primary-button {
@@ -109,6 +112,7 @@ h1 {
   transition:
     color 180ms ease,
     transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: link-open 760ms 610ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .primary-button::after {
@@ -156,7 +160,7 @@ h1 {
   transition:
     transform 620ms cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 260ms ease;
-  animation: character-in 860ms 190ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: character-in 1120ms 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .manga-anchor img {
@@ -167,11 +171,8 @@ h1 {
 .blink-eye {
   position: absolute;
   z-index: 2;
-  width: 9.2%;
-  height: 4.2%;
-  border-bottom: max(2px, 0.28vw) solid #060608;
-  border-radius: 0 0 999px 999px;
-  background: #fff;
+  width: 8.7%;
+  height: 5.05%;
   opacity: 0;
   transform: translateY(-26%) scaleY(0.2);
   transition:
@@ -179,16 +180,43 @@ h1 {
     transform 145ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.blink-eye::before,
+.blink-eye::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.blink-eye::before {
+  background: #fff;
+}
+
+.blink-eye::after {
+  border-bottom: max(2px, 0.22vw) solid #060608;
+  border-radius: 0 0 999px 999px;
+  transform: translateY(-3%);
+}
+
 .blink-eye-left {
-  top: 34.9%;
-  left: 39.8%;
-  transform: translateY(-26%) rotate(3deg) scaleY(0.2);
+  top: 35.05%;
+  left: 40.15%;
+  transform: translateY(-18%) rotate(3deg) scaleY(0.2);
+}
+
+.blink-eye-left::before {
+  clip-path: polygon(4% 0, 100% 30%, 90% 100%, 0 78%);
 }
 
 .blink-eye-right {
-  top: 34.6%;
-  left: 56.4%;
-  transform: translateY(-26%) rotate(-3deg) scaleY(0.2);
+  top: 33.75%;
+  left: 55.6%;
+  width: 9%;
+  height: 5.85%;
+  transform: translateY(-18%) rotate(-3deg) scaleY(0.2);
+}
+
+.blink-eye-right::before {
+  clip-path: polygon(0 30%, 96% 0, 100% 78%, 10% 100%);
 }
 
 .hero.is-blinking .blink-eye,
@@ -218,35 +246,89 @@ h1 {
   filter: drop-shadow(0 28px 30px rgba(29, 29, 31, 0.14));
 }
 
-@keyframes settle-in {
+@keyframes title-open {
   0% {
     opacity: 0;
-    translate: 0 14px;
-    scale: 0.985;
+    filter: blur(18px);
+    transform: translateY(18px) scale(1.09);
   }
-  62% {
-    scale: 1.012;
+  54% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(-4px) scale(0.992);
   }
   100% {
     opacity: 1;
-    translate: 0 0;
-    scale: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes copy-open {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes link-open {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.045);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes line-open {
+  0% {
+    opacity: 0;
+    transform:
+      translate3d(calc(var(--mx) * -16px), calc(var(--my) * 5px), 0)
+      scaleX(0);
+  }
+  100% {
+    opacity: 0.48;
+    transform:
+      translate3d(calc(var(--mx) * -16px), calc(var(--my) * 5px), 0)
+      scaleX(calc(0.96 + (var(--press) * 0.04)));
   }
 }
 
 @keyframes character-in {
   0% {
     opacity: 0;
-    translate: -24px 26px;
-    scale: 0.955;
+    translate: -42px 46px;
+    rotate: -5deg;
+    scale: 0.88;
   }
-  68% {
+  58% {
     opacity: 1;
-    scale: 1.018;
+    translate: 7px -8px;
+    rotate: 1.5deg;
+    scale: 1.045;
+  }
+  78% {
+    translate: -3px 2px;
+    rotate: -0.8deg;
+    scale: 0.992;
   }
   100% {
     opacity: 1;
     translate: 0 0;
+    rotate: 0deg;
     scale: 1;
   }
 }
