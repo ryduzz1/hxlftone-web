@@ -3,50 +3,96 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="hxlftone is a manga editing community for free resources, feedback, challenges, and learning.">
+    <meta name="description" content="Join hxlftone, a Discord community for manga animation editors sharing edits, resources, feedback, packs, and After Effects workflows.">
+    <meta name="keywords" content="hxlftone, manga animation, manga edits, manga editors, anime edits, manga editing discord, After Effects manga edits, AMV editors">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="canonical" href="https://hxlftone.com/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="hxlftone">
     <meta property="og:url" content="https://hxlftone.com/">
-    <meta property="og:title" content="hxlftone">
-    <meta property="og:description" content="Free manga editing resources, feedback, challenges, and help for editors.">
-    <meta property="og:image" content="https://hxlftone.com/assets/hxlftone-icon.png">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="hxlftone">
-    <meta name="twitter:description" content="A manga editing community for resources, critique, and learning.">
-    <meta name="twitter:image" content="https://hxlftone.com/assets/hxlftone-icon.png">
-    <title>hxlftone</title>
+    <meta property="og:title" content="hxlftone | Manga Animation Editors">
+    <meta property="og:description" content="A Discord community for manga editors, by manga editors.">
+    <meta property="og:image" content="https://hxlftone.com/assets/og-hxlftone.png">
+    <meta property="og:image:alt" content="hxlftone - for manga editors, by manga editors">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="hxlftone | Manga Animation Editors">
+    <meta name="twitter:description" content="A Discord community for manga editors, by manga editors.">
+    <meta name="twitter:image" content="https://hxlftone.com/assets/og-hxlftone.png">
+    <title>hxlftone | Manga Animation Discord Community</title>
     <link rel="icon" href="assets/hxlftone-icon.png">
     <link rel="apple-touch-icon" href="assets/hxlftone-icon.png">
     <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "hxlftone",
+        "url": "https://hxlftone.com/",
+        "description": "A Discord community for manga animation editors.",
+        "sameAs": ["https://discord.com/invite/hkyh8JWs78"]
+      }
+    </script>
   </head>
   <body>
-    <header class="site-header">
-      <nav class="nav-shell" aria-label="Primary">
-        <a class="brand" href="#top" aria-label="hxlftone home">
-          <img src="assets/hxlftone-icon.png" alt="" class="brand-icon">
-          <span>hxlftone</span>
-        </a>
-      </nav>
-    </header>
-
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="logo-stage" aria-hidden="true">
-          <span class="shadow"></span>
-          <img src="assets/hxlftone-icon.png" alt="" class="hero-icon">
+        <img
+          class="manga-anchor"
+          src="assets/manga-editor.png"
+          alt="Black and white manga editor character"
+          width="1008"
+          height="939"
+        >
+
+        <div class="brand-lockup" aria-label="hxlftone">
+          <img src="assets/hxlftone-icon.png" alt="" class="brand-icon">
+          <span>hxlftone</span>
         </div>
 
         <div class="hero-copy">
-          <p class="eyebrow">hxlftone</p>
-          <h1 id="hero-title">Manga edits, made easier.</h1>
+          <p class="eyebrow">Discord for manga animation editors</p>
+          <h1 id="hero-title">Make manga move.</h1>
           <p class="hero-text">
-            Free resources, feedback, challenges, and help for editors using
-            After Effects, CapCut, Alight Motion, and Photoshop.
+            Join hxlftone for feedback, packs, challenges, and editor-to-editor
+            breakdowns built around manga motion.
           </p>
-          <a class="primary-button" href="https://discord.com/invite/hkyh8JWs78">
-            Join the Discord
+          <a class="primary-button" href="https://discord.com/invite/hkyh8JWs78" aria-label="Join the hxlftone Discord community">
+            <span>Join Discord</span>
+            <span class="button-dot" aria-hidden="true"></span>
           </a>
         </div>
+
+        <div class="shine-bar" aria-hidden="true"></div>
       </section>
     </main>
+    <script>
+      const hero = document.querySelector(".hero");
+
+      if (hero && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const setMotion = (event) => {
+          const rect = hero.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width - 0.5).toFixed(3);
+          const y = ((event.clientY - rect.top) / rect.height - 0.5).toFixed(3);
+          document.documentElement.style.setProperty("--mx", x);
+          document.documentElement.style.setProperty("--my", y);
+          hero.style.setProperty("--mx", x);
+          hero.style.setProperty("--my", y);
+        };
+
+        hero.addEventListener("pointermove", setMotion);
+        hero.addEventListener("pointerdown", () => hero.classList.add("is-pressing"));
+        hero.addEventListener("pointerup", () => hero.classList.remove("is-pressing"));
+        hero.addEventListener("pointerleave", () => {
+          hero.classList.remove("is-pressing");
+          document.documentElement.style.setProperty("--mx", 0);
+          document.documentElement.style.setProperty("--my", 0);
+          hero.style.setProperty("--mx", 0);
+          hero.style.setProperty("--my", 0);
+        });
+      }
+    </script>
   </body>
 </html>
