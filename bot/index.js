@@ -6,6 +6,7 @@ import { spawn } from "node:child_process";
 import {
   AttachmentBuilder,
   Client,
+  EmbedBuilder,
   GatewayIntentBits,
   Partials,
   PermissionsBitField
@@ -15,6 +16,7 @@ loadLocalEnv();
 
 const token = process.env.DISCORD_TOKEN;
 const channelIds = new Set(splitList(process.env.DISCORD_MEDIA_CHANNEL_IDS));
+const linkOnlyChannelIds = new Set(splitList(process.env.DISCORD_LINK_ONLY_CHANNEL_IDS));
 const maxVideoBytes = Number.parseInt(process.env.MAX_VIDEO_BYTES || "24000000", 10);
 const ytdlpBin = process.env.YTDLP_BIN || "yt-dlp";
 const cookiesFile = process.env.YTDLP_COOKIES_FILE || "";
@@ -22,6 +24,7 @@ const activeMessages = new Set();
 
 const supportedUrlPattern =
   /https?:\/\/(?:www\.|m\.)?(?:(?:youtube\.com|youtu\.be)\/\S+|(?:tiktok\.com)\/\S+|(?:instagram\.com|instagr\.am)\/\S+)/gi;
+const anyUrlPattern = /https?:\/\/\S+/gi;
 
 if (!token) {
   throw new Error("DISCORD_TOKEN is required. Copy .env.example to .env and fill it in.");
@@ -46,14 +49,26 @@ client.once("ready", () => {
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot || message.webhookId) return;
-  if (!message.guild || !channelIds.has(message.channelId)) return;
+  if (!message.guild) return;
   if (activeMessages.has(message.id)) return;
+
+  const botMember = message.guild.members.me || (await message.guild.members.fetchMe());
+  const permissions = message.channel.permissionsFor(botMember);
+
+  if (linkOnlyChannelIds.has(message.channelId)) {
+    const isAllowed = isLinkOnlyPost(message.content);
+
+    if (!isAllowed) {
+      await removeLinkOnlyViolation(message, permissions);
+      return;
+    }
+  }
+
+  if (!channelIds.has(message.channelId)) return;
 
   const url = firstSupportedUrl(message.content);
   if (!url) return;
 
-  const botMember = message.guild.members.me || (await message.guild.members.fetchMe());
-  const permissions = message.channel.permissionsFor(botMember);
   if (!permissions?.has(PermissionsBitField.Flags.SendMessages)) return;
   if (!permissions.has(PermissionsBitField.Flags.AttachFiles)) {
     await safeReply(message, "I can repost videos here, but I need the `Attach Files` permission.");
@@ -126,6 +141,47 @@ function firstSupportedUrl(content) {
   supportedUrlPattern.lastIndex = 0;
   const url = supportedUrlPattern.exec(content)?.[0] || "";
   return url.replace(/[>)\].,!?:;]+$/g, "");
+}
+
+function isLinkOnlyPost(content) {
+  const trimmed = content.trim();
+  if (!trimmed) return false;
+
+  anyUrlPattern.lastIndex = 0;
+  const urls = [...trimmed.matchAll(anyUrlPattern)].map((match) =>
+    match[0].replace(/[>)\].,!?:;]+$/g, "")
+  );
+  if (urls.length === 0) return false;
+
+  anyUrlPattern.lastIndex = 0;
+  const remainder = trimmed.replace(anyUrlPattern, " ");
+  return remainder.replace(/[<>()\[\]\s,.;:!?]+/g, "") === "";
+}
+
+async function removeLinkOnlyViolation(message, permissions) {
+  const embed = new EmbedBuilder()
+    .setColor(0x1d1d1f)
+    .setTitle("Finished edits is links only")
+    .setDescription(
+      "Your message was removed because this channel is only for finished edit links. Repost with just the video link and no extra message text."
+    )
+    .addFields({
+      name: "Channel",
+      value: `<#${message.channelId}>`
+    })
+    .setFooter({ text: "hxlftone" })
+    .setTimestamp();
+
+  await message.author.send({ embeds: [embed] }).catch(() => {});
+
+  if (permissions?.has(PermissionsBitField.Flags.ManageMessages)) {
+    await message.delete().catch(() => {});
+  } else if (permissions?.has(PermissionsBitField.Flags.SendMessages)) {
+    await safeReply(
+      message,
+      "This channel is links only, but I need `Manage Messages` to remove non-link messages."
+    );
+  }
 }
 
 function stripSupportedUrls(content) {
