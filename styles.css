@@ -146,7 +146,6 @@ h1 {
   bottom: clamp(-114px, -8vw, -58px);
   z-index: 1;
   width: clamp(250px, 33vw, 520px);
-  height: auto;
   opacity: 0;
   filter: drop-shadow(0 22px 24px rgba(29, 29, 31, 0.1));
   transform:
@@ -158,6 +157,53 @@ h1 {
     transform 620ms cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 260ms ease;
   animation: character-in 860ms 190ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.manga-anchor img {
+  width: 100%;
+  height: auto;
+}
+
+.blink-eye {
+  position: absolute;
+  z-index: 2;
+  width: 9.2%;
+  height: 4.2%;
+  border-bottom: max(2px, 0.28vw) solid #060608;
+  border-radius: 0 0 999px 999px;
+  background: #fff;
+  opacity: 0;
+  transform: translateY(-26%) scaleY(0.2);
+  transition:
+    opacity 40ms linear,
+    transform 145ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.blink-eye-left {
+  top: 34.9%;
+  left: 39.8%;
+  transform: translateY(-26%) rotate(3deg) scaleY(0.2);
+}
+
+.blink-eye-right {
+  top: 34.6%;
+  left: 56.4%;
+  transform: translateY(-26%) rotate(-3deg) scaleY(0.2);
+}
+
+.hero.is-blinking .blink-eye,
+.hero.is-pressing .blink-eye {
+  opacity: 1;
+}
+
+.hero.is-blinking .blink-eye-left,
+.hero.is-pressing .blink-eye-left {
+  transform: translateY(0) rotate(3deg) scaleY(1);
+}
+
+.hero.is-blinking .blink-eye-right,
+.hero.is-pressing .blink-eye-right {
+  transform: translateY(0) rotate(-3deg) scaleY(1);
 }
 
 .hero.is-pressing {

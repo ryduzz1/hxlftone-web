@@ -39,13 +39,16 @@
   <body>
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <img
-          class="manga-anchor"
-          src="assets/manga-editor.png"
-          alt="Black and white manga editor character"
-          width="1008"
-          height="939"
-        >
+        <div class="manga-anchor" aria-hidden="true">
+          <img
+            src="assets/manga-editor.png"
+            alt=""
+            width="1008"
+            height="939"
+          >
+          <span class="blink-eye blink-eye-left"></span>
+          <span class="blink-eye blink-eye-right"></span>
+        </div>
 
         <div class="hero-copy">
           <h1 id="hero-title">hxlftone</h1>
@@ -71,15 +74,54 @@
         };
 
         hero.addEventListener("pointermove", setMotion);
-        hero.addEventListener("pointerdown", () => hero.classList.add("is-pressing"));
-        hero.addEventListener("pointerup", () => hero.classList.remove("is-pressing"));
-        hero.addEventListener("pointerleave", () => {
+        let blinkTimer;
+        let isPointerDown = false;
+
+        const blink = () => {
+          if (hero.classList.contains("is-pressing")) return;
+          hero.classList.add("is-blinking");
+          window.setTimeout(() => hero.classList.remove("is-blinking"), 145);
+        };
+
+        const scheduleBlink = () => {
+          window.clearTimeout(blinkTimer);
+          blinkTimer = window.setTimeout(() => {
+            blink();
+            scheduleBlink();
+          }, 2400 + Math.random() * 4200);
+        };
+
+        hero.addEventListener("pointerdown", (event) => {
+          isPointerDown = true;
+          hero.classList.add("is-pressing");
+          window.clearTimeout(blinkTimer);
+          if (event.pointerId && hero.setPointerCapture) {
+            hero.setPointerCapture(event.pointerId);
+          }
+        });
+
+        const releasePress = () => {
+          if (!isPointerDown) return;
+          isPointerDown = false;
           hero.classList.remove("is-pressing");
+          scheduleBlink();
+        };
+
+        hero.addEventListener("pointerup", releasePress);
+        hero.addEventListener("pointercancel", releasePress);
+        window.addEventListener("pointerup", releasePress);
+        hero.addEventListener("pointerleave", () => {
+          if (!isPointerDown) {
+            hero.classList.remove("is-pressing");
+            scheduleBlink();
+          }
           document.documentElement.style.setProperty("--mx", 0);
           document.documentElement.style.setProperty("--my", 0);
           hero.style.setProperty("--mx", 0);
           hero.style.setProperty("--my", 0);
         });
+
+        scheduleBlink();
       }
     </script>
   </body>
