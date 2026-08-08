@@ -98,6 +98,8 @@
         };
 
         hero.addEventListener("pointerdown", (event) => {
+          if (event.target.closest("a")) return;
+
           isPointerDown = true;
           hero.classList.add("is-pressing");
           window.clearTimeout(blinkTimer);
