@@ -63,7 +63,7 @@ img {
   transition:
     transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 220ms ease;
-  animation: line-open 1050ms 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: line-open 780ms 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-copy {
@@ -84,7 +84,7 @@ h1 {
   line-height: 0.9;
   letter-spacing: 0;
   text-wrap: balance;
-  animation: title-open 1160ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: title-open 720ms 70ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-text {
@@ -94,7 +94,7 @@ h1 {
   font-weight: 500;
   line-height: 1.17;
   letter-spacing: 0;
-  animation: copy-open 820ms 410ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: copy-open 620ms 190ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .primary-button {
@@ -112,7 +112,7 @@ h1 {
   transition:
     color 180ms ease,
     transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: link-open 760ms 610ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: link-open 560ms 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .primary-button::after {
@@ -160,78 +160,26 @@ h1 {
   transition:
     transform 620ms cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 260ms ease;
-  animation: character-in 1120ms 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: character-in 760ms 230ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.manga-anchor img {
+.manga-frame {
+  display: block;
   width: 100%;
   height: auto;
+  transition: opacity 74ms linear;
 }
 
-.blink-eye {
+.manga-frame-closed {
   position: absolute;
-  z-index: 2;
-  width: 8.7%;
-  height: 5.05%;
+  inset: 0 auto auto 0;
+  width: 100%;
   opacity: 0;
-  transform: translateY(-26%) scaleY(0.2);
-  transition:
-    opacity 40ms linear,
-    transform 145ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.blink-eye::before,
-.blink-eye::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-.blink-eye::before {
-  background: #fff;
-}
-
-.blink-eye::after {
-  border-bottom: max(2px, 0.22vw) solid #060608;
-  border-radius: 0 0 999px 999px;
-  transform: translateY(-3%);
-}
-
-.blink-eye-left {
-  top: 35.05%;
-  left: 40.15%;
-  transform: translateY(-18%) rotate(3deg) scaleY(0.2);
-}
-
-.blink-eye-left::before {
-  clip-path: polygon(4% 0, 100% 30%, 90% 100%, 0 78%);
-}
-
-.blink-eye-right {
-  top: 33.75%;
-  left: 55.6%;
-  width: 9%;
-  height: 5.85%;
-  transform: translateY(-18%) rotate(-3deg) scaleY(0.2);
-}
-
-.blink-eye-right::before {
-  clip-path: polygon(0 30%, 96% 0, 100% 78%, 10% 100%);
-}
-
-.hero.is-blinking .blink-eye,
-.hero.is-pressing .blink-eye {
+.hero.is-blinking .manga-frame-closed,
+.hero.is-pressing .manga-frame-closed {
   opacity: 1;
-}
-
-.hero.is-blinking .blink-eye-left,
-.hero.is-pressing .blink-eye-left {
-  transform: translateY(0) rotate(3deg) scaleY(1);
-}
-
-.hero.is-blinking .blink-eye-right,
-.hero.is-pressing .blink-eye-right {
-  transform: translateY(0) rotate(-3deg) scaleY(1);
 }
 
 .hero.is-pressing {
@@ -249,30 +197,21 @@ h1 {
 @keyframes title-open {
   0% {
     opacity: 0;
-    filter: blur(18px);
-    transform: translateY(18px) scale(1.09);
-  }
-  54% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(-4px) scale(0.992);
+    transform: translateY(10px);
   }
   100% {
     opacity: 1;
-    filter: blur(0);
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
 @keyframes copy-open {
   0% {
     opacity: 0;
-    filter: blur(8px);
-    transform: translateY(16px);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
-    filter: blur(0);
     transform: translateY(0);
   }
 }
@@ -280,15 +219,11 @@ h1 {
 @keyframes link-open {
   0% {
     opacity: 0;
-    transform: translateY(12px) scale(0.92);
-  }
-  70% {
-    opacity: 1;
-    transform: translateY(-3px) scale(1.045);
+    transform: translateY(7px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -310,20 +245,9 @@ h1 {
 @keyframes character-in {
   0% {
     opacity: 0;
-    translate: -42px 46px;
-    rotate: -5deg;
-    scale: 0.88;
-  }
-  58% {
-    opacity: 1;
-    translate: 7px -8px;
-    rotate: 1.5deg;
-    scale: 1.045;
-  }
-  78% {
-    translate: -3px 2px;
-    rotate: -0.8deg;
-    scale: 0.992;
+    translate: -18px 18px;
+    rotate: -1.6deg;
+    scale: 0.975;
   }
   100% {
     opacity: 1;
