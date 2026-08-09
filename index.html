@@ -88,6 +88,7 @@
             height="939"
             decoding="async"
             fetchpriority="high"
+            draggable="false"
           >
           <img
             class="manga-frame manga-frame-closed"
@@ -96,6 +97,7 @@
             width="1296"
             height="1214"
             decoding="async"
+            draggable="false"
           >
         </div>
 
@@ -108,26 +110,97 @@
         </div>
       </section>
 
-      <section class="seo-content" aria-labelledby="community-title">
-        <div class="seo-content-inner">
+      <section class="studio" aria-labelledby="community-title">
+        <div class="studio-copy">
           <p class="section-kicker">manga editing community</p>
-          <h2 id="community-title">A Discord for manga animation editors.</h2>
+          <h2 id="community-title">Everything you edit with, in one place.</h2>
           <p>
-            hxlftone brings manga editors together to share animation edits, editing resources,
-            feedback, packs, and After Effects workflows. The community is built for editors who
-            work with manga panels, anime-inspired motion, typography, compositing, and short-form
-            edit projects.
+            hxlftone is a Discord community for manga animation editors sharing edits,
+            resources, feedback, packs, and After Effects workflows.
           </p>
-          <ul class="seo-points" aria-label="Community focus areas">
-            <li>Manga edits and panel animation</li>
-            <li>After Effects resources and workflows</li>
-            <li>Editor feedback, packs, and community projects</li>
-          </ul>
+        </div>
+
+        <div class="product-stage" aria-label="hxlftone editor workspace preview">
+          <div class="brand-core">
+            <img
+              src="assets/apple-logo.png"
+              alt="hxlftone logo"
+              width="880"
+              height="880"
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+            >
+          </div>
+
+          <img
+            class="stage-character"
+            src="assets/apple-character.png"
+            alt=""
+            width="624"
+            height="1169"
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+          >
+
+          <div class="tool-cloud" aria-label="Editing tools and resource types">
+            <span class="tool-bubble tool-ae">
+              <img src="assets/apple-icon-ae.webp" alt="" width="3840" height="3744" loading="lazy" decoding="async" draggable="false">
+              <strong>After Effects</strong>
+            </span>
+            <span class="tool-bubble tool-ps">
+              <img src="assets/apple-icon-ps.webp" alt="" width="960" height="936" loading="lazy" decoding="async" draggable="false">
+              <strong>Photoshop</strong>
+            </span>
+            <span class="tool-bubble tool-capcut">
+              <img src="assets/apple-icon-capcut.png" alt="" width="3840" height="3823" loading="lazy" decoding="async" draggable="false">
+              <strong>CapCut</strong>
+            </span>
+            <span class="tool-bubble tool-pack">
+              <img src="assets/apple-icon-folder.png" alt="" width="532" height="447" loading="lazy" decoding="async" draggable="false">
+              <strong>panel packs</strong>
+            </span>
+            <span class="tool-bubble tool-psd">
+              <img src="assets/apple-icon-psd.webp" alt="" width="500" height="615" loading="lazy" decoding="async" draggable="false">
+              <strong>PSDs</strong>
+            </span>
+            <span class="tool-bubble tool-alight">
+              <img src="assets/apple-icon-alight.png" alt="" width="300" height="300" loading="lazy" decoding="async" draggable="false">
+              <strong>Alight</strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="feature-line" aria-label="Community focus areas">
+          <article>
+            <span>01</span>
+            <h3>Share edits.</h3>
+            <p>Post works in progress, finished cuts, and challenge entries.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Pull resources.</h3>
+            <p>Find PSDs, overlays, panel packs, tutorials, and requests.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Get sharper.</h3>
+            <p>Ask for feedback, learn workflows, and build your editor profile.</p>
+          </article>
         </div>
       </section>
     </main>
     <script>
+      document.addEventListener("dragstart", (event) => {
+        if (event.target instanceof HTMLImageElement) {
+          event.preventDefault();
+        }
+      });
+
       const hero = document.querySelector(".hero");
+      const stage = document.querySelector(".product-stage");
+      const brandCore = document.querySelector(".brand-core");
 
       if (hero && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const setMotion = (event) => {
@@ -191,6 +264,123 @@
         });
 
         scheduleBlink();
+      }
+
+      if (stage && brandCore && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        let stageTargetX = 0;
+        let stageTargetY = 0;
+        const cloud = stage.querySelector(".tool-cloud");
+        const bubbles = cloud ? [...cloud.querySelectorAll(".tool-bubble")] : [];
+        const baseSlots = [-90, -30, 30, 90, 150, 210];
+        const bubbleState = bubbles.map((bubble, index) => ({
+          bubble,
+          angle: baseSlots[index % baseSlots.length],
+          x: 0,
+          y: 0,
+          size: 118,
+        }));
+        let pointerX = 0;
+        let pointerY = 0;
+        let pointerActive = false;
+        let lastFrame = performance.now();
+
+        const setStageMotion = (event) => {
+          const rect = stage.getBoundingClientRect();
+          stageTargetX = (event.clientX - rect.left) / rect.width - 0.5;
+          stageTargetY = (event.clientY - rect.top) / rect.height - 0.5;
+          stage.style.setProperty("--sx", stageTargetX.toFixed(3));
+          stage.style.setProperty("--sy", stageTargetY.toFixed(3));
+
+          if (cloud) {
+            const cloudRect = cloud.getBoundingClientRect();
+            pointerX = event.clientX - cloudRect.left - (cloudRect.width / 2);
+            pointerY = event.clientY - cloudRect.top - (cloudRect.height / 2);
+            pointerActive = true;
+          }
+        };
+
+        const resetStageMotion = () => {
+          stageTargetX = 0;
+          stageTargetY = 0;
+          stage.style.setProperty("--sx", 0);
+          stage.style.setProperty("--sy", 0);
+          pointerActive = false;
+        };
+
+        const updateBubbleSizes = () => {
+          for (const state of bubbleState) {
+            const rect = state.bubble.getBoundingClientRect();
+            state.size = Math.max(rect.width, rect.height);
+          }
+        };
+
+        const animateStage = (time) => {
+          const delta = Math.min((time - lastFrame) / 1000, 0.05);
+          lastFrame = time;
+          if (cloud && bubbleState.length) {
+            const cloudSize = cloud.getBoundingClientRect().width;
+            const baseOrbit = Math.max(118, Math.min(cloudSize * 0.42, 322));
+            const repelRadius = Math.max(130, cloudSize * 0.28);
+            const positions = bubbleState.map((state) => {
+              state.angle = (state.angle + (delta * 11)) % 360;
+              const radians = state.angle * Math.PI / 180;
+              let x = Math.cos(radians) * baseOrbit;
+              let y = Math.sin(radians) * baseOrbit;
+
+              if (pointerActive) {
+                const dx = x - pointerX;
+                const dy = y - pointerY;
+                const distance = Math.max(Math.hypot(dx, dy), 1);
+                if (distance < repelRadius) {
+                  const force = ((repelRadius - distance) / repelRadius) ** 2;
+                  x += (dx / distance) * force * 118;
+                  y += (dy / distance) * force * 118;
+                }
+              }
+
+              return { state, x, y, radius: (state.size / 2) + 18 };
+            });
+
+            for (let pass = 0; pass < 8; pass += 1) {
+              for (let i = 0; i < positions.length; i += 1) {
+                for (let j = i + 1; j < positions.length; j += 1) {
+                  const a = positions[i];
+                  const b = positions[j];
+                  const dx = b.x - a.x;
+                  const dy = b.y - a.y;
+                  const distance = Math.max(Math.hypot(dx, dy), 1);
+                  const minDistance = a.radius + b.radius;
+                  if (distance < minDistance) {
+                    const push = (minDistance - distance) / 2;
+                    const nx = dx / distance;
+                    const ny = dy / distance;
+                    a.x -= nx * push;
+                    a.y -= ny * push;
+                    b.x += nx * push;
+                    b.y += ny * push;
+                  }
+                }
+              }
+            }
+
+            for (const item of positions) {
+              const limit = (cloudSize / 2) - (item.state.size / 2);
+              item.x = Math.max(-limit, Math.min(limit, item.x));
+              item.y = Math.max(-limit, Math.min(limit, item.y));
+              item.state.x += (item.x - item.state.x) * 0.28;
+              item.state.y += (item.y - item.state.y) * 0.28;
+              item.state.bubble.style.transform = `translate(calc(-50% + ${item.state.x.toFixed(2)}px), calc(-50% + ${item.state.y.toFixed(2)}px))`;
+            }
+          }
+
+          window.requestAnimationFrame(animateStage);
+        };
+
+        updateBubbleSizes();
+        window.addEventListener("resize", updateBubbleSizes);
+        stage.addEventListener("pointermove", setStageMotion);
+        stage.addEventListener("pointerleave", resetStageMotion);
+        window.requestAnimationFrame(animateStage);
       }
     </script>
   </body>
