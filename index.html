@@ -102,8 +102,26 @@
         </div>
 
         <div class="hero-copy">
-          <h1 id="hero-title">hxlftone</h1>
-          <p class="hero-text">built for manga editors</p>
+          <h1 id="hero-title" aria-label="hxlftone">
+            <span aria-hidden="true">
+              <span class="title-char" style="--i: 0">h</span>
+              <span class="title-char" style="--i: 1">x</span>
+              <span class="title-char" style="--i: 2">l</span>
+              <span class="title-char" style="--i: 3">f</span>
+              <span class="title-char" style="--i: 4">t</span>
+              <span class="title-char" style="--i: 5">o</span>
+              <span class="title-char" style="--i: 6">n</span>
+              <span class="title-char" style="--i: 7">e</span>
+            </span>
+          </h1>
+          <p class="hero-text" aria-label="built for manga editors">
+            <span aria-hidden="true">
+              <span class="hero-word" style="--i: 0">built</span>
+              <span class="hero-word" style="--i: 1">for</span>
+              <span class="hero-word" style="--i: 2">manga</span>
+              <span class="hero-word" style="--i: 3">editors</span>
+            </span>
+          </p>
           <a class="primary-button" href="https://discord.com/invite/hkyh8JWs78" aria-label="Join the hxlftone Discord community">
             discord.gg/hxlftone
           </a>
@@ -214,29 +232,51 @@
         };
 
         hero.addEventListener("pointermove", setMotion);
+        const blinkDuration = 145;
+        const blinkCooldown = 2600;
+        const nextBlinkDelay = () => 3000 + Math.random() * 4200;
         let blinkTimer;
+        let blinkReleaseTimer;
         let isPointerDown = false;
+        let lastEyeEventAt = performance.now();
 
-        const blink = () => {
-          if (hero.classList.contains("is-pressing")) return;
-          hero.classList.add("is-blinking");
-          window.setTimeout(() => hero.classList.remove("is-blinking"), 145);
+        const clearBlink = () => {
+          window.clearTimeout(blinkReleaseTimer);
+          hero.classList.remove("is-blinking");
         };
 
-        const scheduleBlink = () => {
+        const scheduleBlink = (delay = nextBlinkDelay()) => {
           window.clearTimeout(blinkTimer);
           blinkTimer = window.setTimeout(() => {
-            blink();
+            if (hero.classList.contains("is-pressing")) {
+              scheduleBlink(blinkCooldown);
+              return;
+            }
+
+            const sinceLastEyeEvent = performance.now() - lastEyeEventAt;
+            if (sinceLastEyeEvent < blinkCooldown) {
+              scheduleBlink(blinkCooldown - sinceLastEyeEvent + 700);
+              return;
+            }
+
+            hero.classList.add("is-blinking");
+            lastEyeEventAt = performance.now();
+            window.clearTimeout(blinkReleaseTimer);
+            blinkReleaseTimer = window.setTimeout(() => {
+              hero.classList.remove("is-blinking");
+            }, blinkDuration);
             scheduleBlink();
-          }, 2400 + Math.random() * 4200);
+          }, delay);
         };
 
         hero.addEventListener("pointerdown", (event) => {
           if (event.target.closest("a")) return;
 
           isPointerDown = true;
-          hero.classList.add("is-pressing");
+          lastEyeEventAt = performance.now();
           window.clearTimeout(blinkTimer);
+          clearBlink();
+          hero.classList.add("is-pressing");
           if (event.pointerId && hero.setPointerCapture) {
             hero.setPointerCapture(event.pointerId);
           }
@@ -246,7 +286,8 @@
           if (!isPointerDown) return;
           isPointerDown = false;
           hero.classList.remove("is-pressing");
-          scheduleBlink();
+          lastEyeEventAt = performance.now();
+          scheduleBlink(blinkCooldown + 900);
         };
 
         hero.addEventListener("pointerup", releasePress);
@@ -255,7 +296,8 @@
         hero.addEventListener("pointerleave", () => {
           if (!isPointerDown) {
             hero.classList.remove("is-pressing");
-            scheduleBlink();
+            clearBlink();
+            scheduleBlink(blinkCooldown);
           }
           document.documentElement.style.setProperty("--mx", 0);
           document.documentElement.style.setProperty("--my", 0);
@@ -263,7 +305,7 @@
           hero.style.setProperty("--my", 0);
         });
 
-        scheduleBlink();
+        scheduleBlink(5200 + Math.random() * 2200);
       }
 
       if (stage && brandCore && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
