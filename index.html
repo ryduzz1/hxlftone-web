@@ -78,7 +78,7 @@
   </head>
   <body>
     <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero is-entering" aria-labelledby="hero-title">
         <div class="manga-anchor" aria-hidden="true">
           <img
             class="manga-frame manga-frame-open"
@@ -239,6 +239,10 @@
         let blinkReleaseTimer;
         let isPointerDown = false;
         let lastEyeEventAt = performance.now();
+
+        window.setTimeout(() => {
+          hero.classList.remove("is-entering");
+        }, 1400);
 
         const clearBlink = () => {
           window.clearTimeout(blinkReleaseTimer);
