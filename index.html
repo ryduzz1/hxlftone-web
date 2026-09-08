@@ -77,6 +77,14 @@
     </script>
   </head>
   <body>
+    <header class="site-header">
+      <div aria-hidden="true"></div>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="catalog.html">Manga Catalog</a>
+      </nav>
+      <a class="header-cta" href="https://discord.com/invite/hkyh8JWs78">Community <span aria-hidden="true">↗</span></a>
+    </header>
     <main id="top">
       <section class="hero is-entering" aria-labelledby="hero-title">
         <div class="manga-anchor" aria-hidden="true">
@@ -128,85 +136,6 @@
         </div>
       </section>
 
-      <section class="studio" aria-labelledby="community-title">
-        <div class="studio-copy">
-          <p class="section-kicker">manga editing community</p>
-          <h2 id="community-title">Your editing kit, together.</h2>
-          <p>
-            Share edits, resources, feedback, packs, and workflows with manga editors.
-          </p>
-        </div>
-
-        <div class="product-stage" aria-label="hxlftone editor workspace preview">
-          <div class="brand-core">
-            <img
-              src="assets/apple-logo.png"
-              alt="hxlftone logo"
-              width="880"
-              height="880"
-              loading="lazy"
-              decoding="async"
-              draggable="false"
-            >
-          </div>
-
-          <img
-            class="stage-character"
-            src="assets/apple-character.png"
-            alt=""
-            width="624"
-            height="1169"
-            loading="lazy"
-            decoding="async"
-            draggable="false"
-          >
-
-          <div class="tool-cloud" aria-label="Editing tools and resource types">
-            <span class="tool-bubble tool-ae">
-              <img src="assets/apple-icon-ae.webp" alt="" width="3840" height="3744" loading="lazy" decoding="async" draggable="false">
-              <strong>After Effects</strong>
-            </span>
-            <span class="tool-bubble tool-ps">
-              <img src="assets/apple-icon-ps.webp" alt="" width="960" height="936" loading="lazy" decoding="async" draggable="false">
-              <strong>Photoshop</strong>
-            </span>
-            <span class="tool-bubble tool-capcut">
-              <img src="assets/apple-icon-capcut.png" alt="" width="3840" height="3823" loading="lazy" decoding="async" draggable="false">
-              <strong>CapCut</strong>
-            </span>
-            <span class="tool-bubble tool-pack">
-              <img src="assets/apple-icon-folder.png" alt="" width="532" height="447" loading="lazy" decoding="async" draggable="false">
-              <strong>panel packs</strong>
-            </span>
-            <span class="tool-bubble tool-psd">
-              <img src="assets/apple-icon-psd.webp" alt="" width="500" height="615" loading="lazy" decoding="async" draggable="false">
-              <strong>PSDs</strong>
-            </span>
-            <span class="tool-bubble tool-alight">
-              <img src="assets/apple-icon-alight.png" alt="" width="300" height="300" loading="lazy" decoding="async" draggable="false">
-              <strong>Alight</strong>
-            </span>
-          </div>
-        </div>
-
-        <div class="feature-line" aria-label="Community focus areas">
-          <article>
-            <span>01</span>
-            <h3>Share edits.</h3>
-            <p>Post works in progress, finished cuts, and challenge entries.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Pull resources.</h3>
-            <p>Find PSDs, overlays, panel packs, tutorials, and requests.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Get sharper.</h3>
-            <p>Ask for feedback, learn workflows, and build your editor profile.</p>
-          </article>
-        </div>
-      </section>
     </main>
     <script>
       document.addEventListener("dragstart", (event) => {
