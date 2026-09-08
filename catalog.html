@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Browse the Hxlftone manga panel catalog.">
+    <meta name="theme-color" content="#ffffff">
+    <title>Manga Catalog | hxlftone</title>
+    <link rel="icon" href="assets/hxlftone-icon.png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="catalog-body">
+    <header class="site-header">
+      <div aria-hidden="true"></div>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="catalog.html" aria-current="page">Manga Catalog</a>
+      </nav>
+      <a class="header-cta" href="https://discord.com/invite/hkyh8JWs78">Community <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main class="catalog" id="catalog">
+      <section class="catalog-browser" aria-label="Manga panel browser">
+        <div class="catalog-content">
+          <aside class="catalog-filters" aria-label="Panel filters">
+            <div class="filter-heading">
+              <h2>Filter panels</h2>
+              <button class="clear-filters" type="button">Clear all</button>
+            </div>
+            <div class="selected-filters" aria-live="polite"></div>
+            <div class="filter-groups">
+              <details class="filter-group" open>
+                <summary>Shot &amp; composition</summary>
+                <div class="filter-options">
+                  <button type="button" class="filter-option" data-filter="close-up">Close-up</button>
+                  <button type="button" class="filter-option" data-filter="wide">Wide shot</button>
+                  <button type="button" class="filter-option" data-filter="profile">Profile</button>
+                  <button type="button" class="filter-option" data-filter="spread">Two-page spread</button>
+                </div>
+              </details>
+              <details class="filter-group">
+                <summary>Scene</summary>
+                <div class="filter-options">
+                  <button type="button" class="filter-option" data-filter="action">Action</button>
+                  <button type="button" class="filter-option" data-filter="dialogue">Dialogue</button>
+                  <button type="button" class="filter-option" data-filter="reaction">Reaction</button>
+                  <button type="button" class="filter-option" data-filter="establishing">Establishing</button>
+                </div>
+              </details>
+              <details class="filter-group">
+                <summary>Mood</summary>
+                <div class="filter-options">
+                  <button type="button" class="filter-option" data-filter="dramatic">Dramatic</button>
+                  <button type="button" class="filter-option" data-filter="tense">Tense</button>
+                  <button type="button" class="filter-option" data-filter="calm">Calm</button>
+                  <button type="button" class="filter-option" data-filter="funny">Funny</button>
+                </div>
+              </details>
+              <details class="filter-group">
+                <summary>Editing use</summary>
+                <div class="filter-options">
+                  <button type="button" class="filter-option" data-filter="zoom">Zoom friendly</button>
+                  <button type="button" class="filter-option" data-filter="pan">Pan friendly</button>
+                  <button type="button" class="filter-option" data-filter="shake">Shake friendly</button>
+                </div>
+              </details>
+            </div>
+          </aside>
+
+          <div class="catalog-results" aria-live="polite">
+            <label class="catalog-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"></circle><path d="m16 16 4.4 4.4"></path></svg>
+              <input type="search" id="catalog-search" placeholder="Search by title, scene, mood, or shot…" autocomplete="off">
+            </label>
+            <div class="results-topline">
+              <p><strong id="asset-count">8</strong> panels &amp; pages</p>
+              <div class="sort-control">
+                <span class="sort-label">Sort by</span>
+                <button type="button" class="sort-button" aria-expanded="false" aria-controls="sort-menu">Most downloaded</button>
+                <div class="sort-menu" id="sort-menu">
+                  <button type="button" data-sort="Most downloaded">Most downloaded</button>
+                  <button type="button" data-sort="Most liked">Most liked</button>
+                  <button type="button" data-sort="Newest added">Newest added</button>
+                </div>
+              </div>
+            </div>
+            <div class="panel-grid" id="panel-grid">
+              <article class="catalog-card" data-tags="close-up reaction dramatic zoom" data-search="first light close up reaction dramatic face page 12">
+                <div class="placeholder-panel panel-closeup" aria-label="Placeholder close-up panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 01 · p. 12</span></p><small>Close-up · Reaction · Dramatic</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>248</span></button><button class="download-button" type="button">↓ <span>1.2k</span></button></div>
+              </article>
+              <article class="catalog-card" data-tags="action tense pan shake" data-search="first light action tense movement fight page 18">
+                <div class="placeholder-panel panel-action" aria-label="Placeholder action panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 01 · p. 18</span></p><small>Action · Tense · Motion</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>184</span></button><button class="download-button" type="button">↓ <span>936</span></button></div>
+              </article>
+              <article class="catalog-card" data-tags="wide establishing calm pan" data-search="first light wide establishing calm landscape page 20">
+                <div class="placeholder-panel panel-wide" aria-label="Placeholder wide panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 01 · p. 20</span></p><small>Wide shot · Establishing · Calm</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>95</span></button><button class="download-button" type="button">↓ <span>611</span></button></div>
+              </article>
+              <article class="catalog-card" data-tags="profile reaction dramatic zoom" data-search="first light profile reaction dramatic page 27">
+                <div class="placeholder-panel panel-profile" aria-label="Placeholder profile panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 01 · p. 27</span></p><small>Profile · Reaction · Dramatic</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>301</span></button><button class="download-button" type="button">↓ <span>1.8k</span></button></div>
+              </article>
+              <article class="catalog-card" data-tags="dialogue calm zoom" data-search="first light dialogue calm speech bubbles page 31">
+                <div class="placeholder-panel panel-dialogue" aria-label="Placeholder dialogue panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 01 · p. 31</span></p><small>Dialogue · Calm · Two character</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>132</span></button><button class="download-button" type="button">↓ <span>748</span></button></div>
+              </article>
+              <article class="catalog-card landscape-card" data-tags="spread action dramatic pan shake" data-search="first light two page spread action dramatic page 44 45">
+                <div class="placeholder-panel panel-spread" aria-label="Placeholder two-page spread artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 02 · pp. 44–45</span></p><small>Spread · Action · Dramatic</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light page spread">♡ <span>447</span></button><button class="download-button" type="button">↓ <span>2.4k</span></button></div>
+              </article>
+              <article class="catalog-card" data-tags="close-up dialogue tense zoom" data-search="first light close up dialogue tense page 49">
+                <div class="placeholder-panel panel-closeup-alt" aria-label="Placeholder close-up panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 02 · p. 49</span></p><small>Close-up · Dialogue · Tense</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>168</span></button><button class="download-button" type="button">↓ <span>814</span></button></div>
+              </article>
+              <article class="catalog-card" data-tags="wide funny reaction pan" data-search="first light wide funny reaction page 52">
+                <div class="placeholder-panel panel-funny" aria-label="Placeholder reaction panel artwork"><span>Sample asset</span></div>
+                <div class="card-copy"><p><strong>First Light</strong><span>Ch. 02 · p. 52</span></p><small>Wide shot · Reaction · Funny</small></div>
+                <div class="card-actions"><button class="metric-button like-button" type="button" aria-label="Like First Light panel">♡ <span>74</span></button><button class="download-button" type="button">↓ <span>392</span></button></div>
+              </article>
+              <div class="no-results" id="no-results" hidden>No sample panels match that search. Try a different tag or phrase.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const selectedFilters = new Set();
+      const filterNames = { 'close-up': 'Close-up', wide: 'Wide shot', profile: 'Profile', spread: 'Two-page spread', action: 'Action', dialogue: 'Dialogue', reaction: 'Reaction', establishing: 'Establishing', dramatic: 'Dramatic', tense: 'Tense', calm: 'Calm', funny: 'Funny', zoom: 'Zoom friendly', pan: 'Pan friendly', shake: 'Shake friendly' };
+      const filterButtons = [...document.querySelectorAll('.filter-option')];
+      const cards = [...document.querySelectorAll('.catalog-card')];
+      const chosen = document.querySelector('.selected-filters');
+      const filterPanel = document.querySelector('.catalog-filters');
+      const searchInput = document.querySelector('#catalog-search');
+      const count = document.querySelector('#asset-count');
+      const empty = document.querySelector('#no-results');
+      function refreshCatalog() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visible = 0;
+        cards.forEach((card) => {
+          const matchesTags = [...selectedFilters].every((filter) => card.dataset.tags.includes(filter));
+          const matchesSearch = !query || card.dataset.search.includes(query);
+          card.hidden = !(matchesTags && matchesSearch);
+          if (!card.hidden) visible += 1;
+        });
+        count.textContent = visible;
+        empty.hidden = visible !== 0;
+        chosen.innerHTML = [...selectedFilters].map((filter) => `<button class="selected-filter" type="button" data-remove="${filter}">${filterNames[filter]} <span aria-hidden="true">−</span></button>`).join('');
+        filterPanel.classList.toggle('has-selected-filters', selectedFilters.size > 0);
+        filterButtons.forEach((button) => button.classList.toggle('is-selected', selectedFilters.has(button.dataset.filter)));
+      }
+      filterButtons.forEach((button) => button.addEventListener('click', () => { const filter = button.dataset.filter; selectedFilters.has(filter) ? selectedFilters.delete(filter) : selectedFilters.add(filter); refreshCatalog(); }));
+      chosen.addEventListener('click', (event) => { const button = event.target.closest('[data-remove]'); if (button) { selectedFilters.delete(button.dataset.remove); refreshCatalog(); } });
+      document.querySelector('.clear-filters').addEventListener('click', () => { selectedFilters.clear(); searchInput.value = ''; refreshCatalog(); });
+      searchInput.addEventListener('input', refreshCatalog);
+      document.querySelectorAll('.like-button').forEach((button) => button.addEventListener('click', () => { if (button.classList.contains('is-liked')) return; button.classList.add('is-liked'); button.firstChild.textContent = '♥ '; button.querySelector('span').textContent = Number(button.querySelector('span').textContent) + 1; }));
+      const sortButton = document.querySelector('.sort-button');
+      const sortMenu = document.querySelector('.sort-menu');
+      const sortControl = document.querySelector('.sort-control');
+      const setSortOpen = (open) => { sortButton.setAttribute('aria-expanded', String(open)); sortControl.classList.toggle('is-open', open); };
+      sortButton.addEventListener('click', () => setSortOpen(sortButton.getAttribute('aria-expanded') !== 'true'));
+      sortMenu.addEventListener('click', (event) => { const option = event.target.closest('[data-sort]'); if (!option) return; sortButton.textContent = option.dataset.sort; setSortOpen(false); });
+      document.addEventListener('click', (event) => { if (!event.target.closest('.sort-control')) setSortOpen(false); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { setSortOpen(false); sortButton.focus(); } });
+    </script>
+  </body>
+</html>
